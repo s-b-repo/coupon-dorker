@@ -31,7 +31,10 @@
    ```bash
    pip install google
    ```
-
+   ```
+   sudo $(which pip) install google
+```
+```
 3. **Run the script**:
    ```bash
    python coupon_dorking_tool.py
