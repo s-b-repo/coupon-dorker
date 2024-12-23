@@ -10,7 +10,7 @@
 
 ## Features 🌟
 
-- **Predefined Dork Generation**: Automatically generates 15 coupon-related dorks.
+- **Predefined Dork Generation**: Automatically generates large coupon-related dorks.
 - **Custom Dork Loading**: Supports loading dorks from a custom text file.
 - **Automated Search**: Performs searches using predefined or custom dorks.
 - **Save Results**: Outputs search results to a text file for easy reference.
