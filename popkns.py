@@ -1,5 +1,15 @@
 import os
 from googlesearch import search
+import time
+
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/91.0.864.54",
+    "Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Mobile Safari/537.36",
+]
 
 def banner():
     print("""
@@ -14,7 +24,7 @@ def banner():
 
 def generate_dorks(filename="dorks.txt"):
     dorks = [
-        
+
     # General coupon dorks
     "site:example.com inurl:coupon",
     "site:retailmenot.com inurl:discount",
@@ -143,19 +153,24 @@ def load_dorks(filename="dorks.txt"):
     print(f"[+] Loaded {len(dorks)} dorks from {filename}")
     return dorks
 
-def perform_dorking(dorks, num_results):
+
+
+def perform_dorking(dorks, stop_results):
     results = {}
     for dork in dorks:
         print(f"\n[+] Searching for: {dork}")
         dork_results = []
         try:
-            for result in search(dork, num_results=num_results, stop=num_results, lang="en"):
+            user_agent = random.choice(USER_AGENTS)
+            for result in search(dork, stop=stop_results, lang="en", user_agent=user_agent):
                 print(f" - {result}")
                 dork_results.append(result)
+                time.sleep(2)  # Add a delay of 2 seconds between queries
         except Exception as e:
             print(f"Error searching with dork: {dork}. Error: {e}")
         results[dork] = dork_results
     return results
+
 
 def save_results(results, filename="coupon_dorks_results.txt"):
     with open(filename, "w") as file:
@@ -170,8 +185,8 @@ def main():
     banner()
     dorks_file = input("Enter the dorks filename (default: dorks.txt): ").strip() or "dorks.txt"
     dorks = load_dorks(dorks_file)
-    num_results = int(input("Enter the number of results to retrieve per dork: "))
-    results = perform_dorking(dorks, num_results)
+    stop_results = int(input("Enter the number of results to retrieve per dork: "))
+    results = perform_dorking(dorks, stop_results)
     save_results(results)
 
 if __name__ == "__main__":
